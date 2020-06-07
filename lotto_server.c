@@ -729,17 +729,20 @@ void comandoVedi_Giocate(char* buffer){
 
 void stampaVincite(){
 
-	//variabili per la letture delle righe del file giocate_vincenti.txt
-	char *line_buf = NULL;
-  	size_t line_buf_size = 0;
-  	ssize_t line_size;
+	  //variabili per la letture delle righe del file giocate_vincenti.txt
+	  char *line_buf = NULL;
+    size_t line_buf_size = 0;
+    ssize_t line_size;
 
-  	FILE* fd;
+    FILE* fd;
 
-  	char outputstr[1024] = ""; //stringa che verrà inviata al client
-  	char date[10];  //stringa per contenere la data (mi serve per discriminare estrazioni diverse per lo stesso utente)
-  	char time[9];	//stringa per contenere l'ora (mi serve per discriminare estrazioni diverse per lo stesso utente)
-	int found = 0;  //se l'utente viene trovato all'interno di giocate_vincenti.txt viene settata
+    char outputstr[1024] = ""; //stringa che verrà inviata al client
+    char riepilogo[1024] = ""; //stringa per contenere il riepilogo delle vincite
+    char date[10];  //stringa per contenere la data (mi serve per discriminare estrazioni diverse per lo stesso utente)
+    char time[9];	//stringa per contenere l'ora (mi serve per discriminare estrazioni diverse per lo stesso utente)
+	  int found = 0;  //se l'utente viene trovato all'interno di giocate_vincenti.txt viene settata
+    float importi[5] = {0}; //array per memorizzare le somme degli importi di tutte le vincite 
+    //importo[0] conterrà la somma delle vincite per l'estratto e cosi via
 
   	fd = fopen("giocate_vincenti.txt", "r");
 
@@ -756,7 +759,7 @@ void stampaVincite(){
   		char stringaUtente[1024]; 
 
   		//variabili per spezzettare la riga del file in substring che verranno inserite in parole[]
-  		int numeroParole = 0;
+  	int numeroParole = 0;
 		char delimiter[2] = " ";
 		char* token = strtok(line_buf, delimiter); //passandogli un delimitatore va a spezzettare la stringa ogni volta che incontra " "
 		char parole[15][1024];  //array di substring
@@ -764,8 +767,10 @@ void stampaVincite(){
 								//parole[1] conterrà "dd-mm-yyyy"
 								//parole[2] conterrà "hh:mm:ss"
 								//parole[3] etc conterrà le ruote vincenti e poi i numeri etc
+    int k;
+    for(k=0; k<15; k++) strcpy(parole[k],"");
 
-  		sprintf(stringaUtente,"%s:",loggedUsr); //preparo la stringa contentente il loggedUsr per il controllo sull'utente loggato
+  	sprintf(stringaUtente,"%s:",loggedUsr); //preparo la stringa contentente il loggedUsr per il controllo sull'utente loggato
 
 		while (token != NULL) { //while per riempire l'array parole[]
 			strcpy(parole[numeroParole],token);
@@ -790,12 +795,20 @@ void stampaVincite(){
     			if(strcmp(parole[1],date) != 0 || strcmp(parole[2],time) != 0) { //se non è la stessa estrazione
     				strcpy(date,parole[1]); //salvo il nuovo timestamp
     				strcpy(time,parole[2]);
+            strcat(outputstr,"***********************************************************\n");
     				sprintf(firstline,"Estrazione del %s ore %s\n",parole[1],parole[2]); //nuova estrazione
     				strcat(outputstr,firstline);
     			}
     			while(strcmp(parole[i],"") != 0 ){ //scorro le substring a partire dalle ruote vincenti e inserisco tutto in outputstr
-    				char str[1024];
-    				if(strcmp(parole[i+1],"") == 0 ) sprintf(str,"%s",parole[i]); //aggiusto la formattazione della stringa
+    				char str[1024] = "";
+    				if(strcmp(parole[i+1],"") == 0 ) {
+              if(strcmp(parole[i-1],"Estratto") == 0) importi[0] = importi[0] + atof(parole[i]);
+              if(strcmp(parole[i-1],"Ambo") == 0) importi[1] = importi[1] + atof(parole[i]);
+              if(strcmp(parole[i-1],"Terno") == 0) importi[2] = importi[2] + atof(parole[i]);
+              if(strcmp(parole[i-1],"Quartina") == 0) importi[3] = importi[3] + atof(parole[i]);
+              if(strcmp(parole[i-1],"Cinquina") == 0) importi[4] = importi[4] + atof(parole[i]);
+              sprintf(str,"%s",parole[i]); //aggiusto la formattazione della stringa
+            }
     				else sprintf(str,"%s ",parole[i]);
     				strcat(outputstr,str);
     				i++;
@@ -807,7 +820,10 @@ void stampaVincite(){
     	line_size = getline(&line_buf, &line_buf_size, fd); //prendo la prossima linea e continuo
 
   	}
-  	//se non è stata modificata outputstr significa che non ho trovato vincite per l'utente in questione
+    strcat(outputstr,"***********************************************************\n");
+    sprintf(riepilogo,"Vincite su ESTRATTO: %f\nVincite su AMBO: %f\nVincite su TERNO: %f\nVincite su QUATERNA: %f\nVincite su CINQUINA: %f\n",importi[0],importi[1],importi[2],importi[3],importi[4]);
+  	strcat(outputstr,riepilogo);
+    //se non è stata modificata outputstr significa che non ho trovato vincite per l'utente in questione
   	if(strcmp(outputstr,"") == 0 ) inviaMessaggio("**** SERVER: Siamo spiacenti, non è stata trovata alcuna vincita ****\n");
   		else inviaMessaggio(outputstr);
 }
@@ -1302,7 +1318,7 @@ void controllaRigaEstrazione(char* riga){
     				float vincita; //float per il calcolo dell'importo della vincita
     				char strVincita[1024]; //stringa per memorizzare l'importo della vincita
     				vincita = calcolaVincita(5,schedinaInAttesa.importi[4]);
-    				sprintf(strVincita,"%f ",vincita);
+    				sprintf(strVincita,"%f",vincita);
     				strcat(strVittoria,"Cinquina ");
     				strcat(strVittoria,strVincita);
     				vittoria = 1; //imposto vittoria a 1 (ho vinto)
@@ -1321,7 +1337,7 @@ void controllaRigaEstrazione(char* riga){
     				float vincita;
     				char strVincita[1024];
     				vincita = calcolaVincita(4,schedinaInAttesa.importi[3]);
-    				sprintf(strVincita,"%f ",vincita);
+    				sprintf(strVincita,"%f",vincita);
     				strcat(strVittoria,"Quaterna ");
     				strcat(strVittoria,strVincita);
     				vittoria = 1;
@@ -1334,7 +1350,7 @@ void controllaRigaEstrazione(char* riga){
     				float vincita;
     				char strVincita[1024];
     				vincita = calcolaVincita(3,schedinaInAttesa.importi[2]);
-    				sprintf(strVincita,"%f ",vincita);
+    				sprintf(strVincita,"%f",vincita);
     				strcat(strVittoria,"Terno ");
     				strcat(strVittoria,strVincita);
     				vittoria = 1;
@@ -1347,7 +1363,7 @@ void controllaRigaEstrazione(char* riga){
     				float vincita;
     				char strVincita[1024];
     				vincita = calcolaVincita(2,schedinaInAttesa.importi[1]);
-    				sprintf(strVincita,"%f ",vincita);
+    				sprintf(strVincita,"%f",vincita);
     				strcat(strVittoria,"Ambo ");
     				strcat(strVittoria,strVincita);
     				vittoria = 1;
@@ -1359,7 +1375,7 @@ void controllaRigaEstrazione(char* riga){
     				float vincita;
     				char strVincita[1024];
     				vincita = calcolaVincita(2,schedinaInAttesa.importi[1]);
-    				sprintf(strVincita,"%f ",vincita);
+    				sprintf(strVincita,"%f",vincita);
     				strcat(strVittoria,"Estratto ");
     				strcat(strVittoria,strVincita);
     				vittoria = 1;

@@ -70,13 +70,56 @@ void messaggioBenvenuto(){ //manda un messaggio di benvenuto a connessione avven
 
 void comandoHelp(char* comando){
 
-	if(strcmp(comando,"0") == 0) printf("Eccoti una breve sintesi di alcuni comandi . . .\n");
-	if(strcmp(comando,"signup\n") == 0) printf("Signup . . .\n");
-	if(strcmp(comando,"login\n") == 0)	printf("Login . . .\n");
-	if(strcmp(comando,"invia_giocata\n") == 0) printf("Invia_Giocata . . .\n");
-	if(strcmp(comando,"vedi_giocate\n") == 0) printf("Vedi_Giocate . . .\n");
-	if(strcmp(comando,"vedi_estrazione\n") == 0) printf("Vedi_Estrazione . . .\n");
-	if(strcmp(comando,"esci\n") == 0) printf("Esci . . .\n");
+	if(strcmp(comando,"0") == 0) printf("Eccoti una breve sintesi di alcuni comandi disponibili:\n"
+										"1)!signup <username> <password> --> registra un nuovo utente\n"
+										"2)!login <username> <password> --> autentica un utente precedentemente registrato\n"
+										"3)!invia_giocata g --> invia una giocata g al server (solo utente loggato)\n"
+										"4)!vedi_giocate tipo --> tipo può valere 0 oppure 1\n"
+										"  se tipo vale 0 allora potrai visualizzare le giocate passate\n"
+										"  se tipo vale 1 allora potrai visualizzare le giocate in attesa di estrazione\n"
+										"  (solo utente loggato)\n"
+										"5)!vedi_estrazione <n> <ruota> --> ti permette di visualizzare le n estrazioni più recenti\n"
+										"  se la ruota non è specificata le visualizza tutte, altrimenti solo la ruota selezionata\n"
+										"  (solo utente loggato)\n"
+										"6)!vedi_vincite --> ti permette di visualizzare le tue vincite (solo utente loggato)\n"
+										"7)!esci --> l'utente loggato viene disconnesso e il client viene chiuso\n"
+										);
+	if(strcmp(comando,"signup\n") == 0) printf("**** !signup <username> <password> ****\n"
+											   "  registra un nuovo utente con username e password specificati\n"
+											   "  se è già presente un utente con lo stesso username, verrà chiesto di sceglierne un altro.\n"
+											   );
+	if(strcmp(comando,"login\n") == 0)	printf("**** !login <username> <password> ****\n"
+											   "  autentica l'utente con username e password specificati (se corretti)\n"
+											   "  in caso vengano inseriti dati che non corrispondono ad alcun utente, il login fallirà.\n"
+											   "  L'utente potrà riprovare per altre 2 volte, esauriti i tentativi verrà bloccato per 30 min.\n"
+											  );
+
+	if(strcmp(comando,"invia_giocata\n") == 0) printf("**** !invia_giocata g ****\n"
+													  "  se l'utente ha eseguito il login potrà inviare giocate al server\n"
+													  "  la giocata ha la seguente formattazione:\n"
+													  "  !invia_giocata -r bari roma . . -n 22 33 44 . . -i 0 1 2 3\n"
+													  "  -r indica che a seguire ci saranno le ruote, posso specificare solo ruote esistenti\n"
+													  "  -n indica che a seguire ci saranno i numeri puntati nel range [1,90]\n"
+													  "  -i indica che a seguire ci saranno gli importi delle puntate, la prima per l'estratto etc\n"
+													  "  la giocata verrà inserita nella scheda utente e sarà in attesa di estrazione.\n"
+													 );
+	if(strcmp(comando,"vedi_giocate\n") == 0) printf("**** !vedi_giocate <tipo> ****\n"
+													 "  se l'utente ha eseguito il login potrà visualizzare le giocate effettuate\n"
+													 "  se tipo=0 visualizzerà le giocate passate (già state estratte)\n"
+													 "  se tipo=1 visualizzerà le giocate in attesa di estrazione.\n"
+													);
+	if(strcmp(comando,"vedi_estrazione\n") == 0) printf("**** !vedi_estrazione <n> <ruota> ****\n"
+														"  se l'utente ha eseguito il login potrà vedere le estrazioni più recenti\n"
+														"  <n> va sempre specificato e indica quante estrazioni voglio visualizzare\n"
+														"  se <ruota> non è specificata visualizzerò l'intera estrazione\n"
+														"  altrimenti solo la riga dell'estrazione corrispondente alla ruota selezionata.\n"
+													   );
+	if(strcmp(comando,"vedi_vincite\n") == 0) printf("**** !vedi_vincite ****\n"
+													 "  se l'utente ha eseguito il login potrà vedere il suo storico vincite.\n"
+													);
+	if(strcmp(comando,"esci\n") == 0) printf("**** !esci ****\n"
+											 "  l'utente attualmente loggato viene disconnesso e il client viene chiuso.\n"
+											);
 }
 
 int verificaCorrettezzaRuota(char* ruota){
@@ -128,7 +171,8 @@ int analisiComando(char* buffer){
 		return 1;
 	} else if(strcmp(parole[0],"!help") == 0){ //è il comando !help con argomenti
 	 	if(strcmp(parole[1],"signup\n") == 0 || strcmp(parole[1],"login\n") == 0 || strcmp(parole[1],"invia_giocata\n") == 0
-		    || strcmp(parole[1],"vedi_giocate\n") == 0 || strcmp(parole[1],"vedi_estrazione\n") == 0 || strcmp(parole[1],"esci\n") == 0){
+		    || strcmp(parole[1],"vedi_giocate\n") == 0 || strcmp(parole[1],"vedi_estrazione\n") == 0 || strcmp(parole[1],"vedi_vincite\n") == 0
+		    || strcmp(parole[1],"esci\n") == 0){
 			comandoHelp(parole[1]);
 			return 1;
 		}
