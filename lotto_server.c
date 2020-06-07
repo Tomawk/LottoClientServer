@@ -867,22 +867,22 @@ void stampaEstrazioni(char* numEstrazioni, char* ruota){
 
   	while (ftell(fd) > 1 && indice >= 0){ //while che continua a leggere dal file finche non finisce oppure indice < 0
 
-  				char str[1024];
+  				  char str[1024];
 
-                fseek(fd, -2  , SEEK_CUR); //sposto il cursore di 2 indietro dalla posizione corrente ovvero dalla fine del file
+            fseek(fd, -2  , SEEK_CUR); //sposto il cursore di 2 indietro dalla posizione corrente ovvero dalla fine del file
 
-                if(ftell(fd) <= 2) //se sono sull'ultimo byte esco
-                        break;
+            if(ftell(fd) <= 2) //se sono sull'ultimo byte esco
+              break;
 
-                ch =fgetc(fd); //prendo il primo carattere
+            ch =fgetc(fd); //prendo il primo carattere
 
-                if(ch != '\n') str[count++] = ch; //finchè leggo caratteri diversi da \n li inserisco in str
+            if(ch != '\n') str[count++] = ch; //finchè leggo caratteri diversi da \n li inserisco in str
 
-                if(ch == '\n') { //se leggo \n significa che ho letto una riga dell'estrazione
+            if(ch == '\n') { //se leggo \n significa che ho letto una riga dell'estrazione
 
-                	int len = strlen(str);
-                	int w = 0;
-                	int i;
+              int len = strlen(str);
+              int w = 0;
+              int i;
 
                 	//in str ho i caratteri letti in ordine inverso
                 	//ad esempio : 58   57   04   28   24 elanoizaN
@@ -907,8 +907,8 @@ void stampaEstrazioni(char* numEstrazioni, char* ruota){
     							strcat(outputstr,"\n");
     						}
     					} else { //altrimenti ci inserisco solo le righe della ruota interessata
-    						strcat(outputstr,estrazione[indiceRuota]);
-    						strcat(outputstr,"\n");
+    						  strcat(outputstr,estrazione[indiceRuota]);
+    						  strcat(outputstr,"\n");
     					}
 
     					if(quanteEstrazioni > 1){ //se devo leggere più estrazioni
@@ -919,7 +919,7 @@ void stampaEstrazioni(char* numEstrazioni, char* ruota){
         				}
         			}
         			count = 0;
-                }
+            }
 
         }
 
