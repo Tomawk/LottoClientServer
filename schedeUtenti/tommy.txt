@@ -1,0 +1,13 @@
+**** SCHEDA DELL'UTENTE: tommy ****
+
+username: tommy
+password: passw123
+
+ELENCO DI TUTTE LE GIOCATE:
+
+ Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale 27 83 * 100.000000 Ambo 
+ Cagliari 1 27 34 38 59 * 1.000000 Cinquina 
+ Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale 11 22 33 44 55 66 77 88 * 2.000000 Ambo * 3.000000 Terno * 4.000000 Quaterna 
+ Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale 12 26 38 49 51 62 * 1.000000 Estratto * 2.000000 Quaterna * 3.000000 Cinquina 
+ Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale 1 17 28 39 47 53 62 89 * 10.000000 Ambo * 20.000000 Terno 
+ Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale 27 37 47 57 87 * 20.000000 Ambo * 100.000000 Terno 

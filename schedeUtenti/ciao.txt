@@ -1,0 +1,9 @@
+**** SCHEDA DELL'UTENTE: ciao ****
+
+username: ciao
+password: ciao
+
+ELENCO DI TUTTE LE GIOCATE:
+
+ Bari Milano 1 2 3 44 55 * 1.000000 Ambo * 22.000000 Terno 
+ Napoli 11 22 33 * 100.000000 Terno 

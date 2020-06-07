@@ -1,0 +1,7 @@
+**** SCHEDA DELL'UTENTE: paolo ****
+
+username: paolo
+password: 123
+
+ELENCO DI TUTTE LE GIOCATE:
+

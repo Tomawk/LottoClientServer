@@ -1,0 +1,10 @@
+ciao: Bari Milano -n 33 40 51 22 77 -i 0.000000 1.000000 2.000000 3.000000 0.000000 
+ciao: Bari -n 5 7 12 -i 0.000000 11.000000 0.000000 0.000000 0.000000 
+ciao: Bari Milano -n 1 2 3 44 55 -i 0.000000 1.000000 22.000000 0.000000 0.000000 
+tommy: Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale -n 27 83 -i 0.000000 100.000000 0.000000 0.000000 0.000000 
+tommy: Cagliari -n 1 27 34 38 59 -i 0.000000 0.000000 0.000000 0.000000 1.000000 
+tommy: Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale -n 11 22 33 44 55 66 77 88 -i 0.000000 2.000000 3.000000 4.000000 0.000000 
+tommy: Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale -n 12 26 38 49 51 62 -i 1.000000 0.000000 0.000000 2.000000 3.000000 
+ciao: Napoli -n 11 22 33 -i 0.000000 0.000000 100.000000 0.000000 0.000000 
+tommy: Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale -n 1 17 28 39 47 53 62 89 -i 0.000000 10.000000 20.000000 0.000000 0.000000 
+tommy: Bari Cagliari Firenze Genova Milano Napoli Palermo Roma Torino Venezia Nazionale -n 27 37 47 57 87 -i 0.000000 20.000000 100.000000 0.000000 0.000000 

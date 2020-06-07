@@ -1,0 +1,7 @@
+**** SCHEDA DELL'UTENTE: tommaso ****
+
+username: tommaso
+password: 123
+
+ELENCO DI TUTTE LE GIOCATE:
+
