@@ -2,7 +2,7 @@
 
 LottoClientServer is a simple **Client-Server** Lottery Simulator playable through the terminal.
 
-Implementend through socket programming in **C**.
+Implemented through socket programming in **C**.
 
 All the specifications can be found [here](https://github.com/Tomawk/LottoClientServer/blob/master/progetto_reti_2019.pdf) [Italian Language Course]  
 
